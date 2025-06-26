@@ -52,6 +52,7 @@ const searchAlbums = async () => {
   });
 
   albums.value = res.data.albums.items;
+  window.scrollTo({ top: 0, behavior: "smooth" });
 };
 
 watch(searchQuery, (newQuery) => {
@@ -252,6 +253,10 @@ input {
 
 .album-cover {
   height: 100px;
+}
+
+ul {
+  min-height: 15rem; /* ou o valor necessário para evitar "saltos" */
 }
 
 .bg-grey {
