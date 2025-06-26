@@ -129,7 +129,7 @@ const handleDelete = async (id) => {
           >
             <img src="../assets/add.svg" class="col-1 add" @click="saveAlbum(album)" />
             <img
-              :src="album.images[0]?.url"
+              :src="album.images?.[0]?.url || require('../assets/solid.jpeg')"
               alt="Capa"
               class="rounded mx-2 album-cover"
             />
