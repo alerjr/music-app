@@ -117,7 +117,7 @@ const handleDelete = async (id) => {
       />
 
       <div
-        v-show="albums.length && searchQuery != ''"
+        v-if="albums.length && searchQuery != ''"
         class="d-flex align-items-center justify-content-center col-12"
       >
         <ul class="d-flex flex-wrap col-10 list-unstyled p-3 rounded">
@@ -141,7 +141,7 @@ const handleDelete = async (id) => {
       </div>
 
       <div
-        v-show="searchQuery === ''"
+        v-if="searchQuery === ''"
         class="d-flex align-items-center justify-content-center col-12"
       >
         <ul
