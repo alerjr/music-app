@@ -1,5 +1,7 @@
 <script setup>
 import { ref, watch, onMounted } from "vue";
+import debounce from "lodash/debounce";
+
 import axios from "axios";
 import {
   createAlbum,
@@ -10,7 +12,6 @@ import {
 
 import favoritedIcon from "../assets/favorited.svg";
 import unfavoritedIcon from "../assets/unfavorited.svg";
-import noImage from "../assets/solid.jpeg";
 
 const clientId = "3fbfb697d64046cea5904fffb80b767c";
 const clientSecret = "5649f07acfd942acb3e2828b92372724";
@@ -55,13 +56,16 @@ const searchAlbums = async () => {
   albums.value = res.data.albums.items;
 };
 
-watch(searchQuery, (newQuery) => {
-  if (newQuery.trim() === "") {
-    albums.value = [];
-    return;
-  }
-  searchAlbums();
-});
+watch(
+  searchQuery,
+  debounce((newQuery) => {
+    if (newQuery.trim() === "") {
+      albums.value = [];
+      return;
+    }
+    searchAlbums();
+  }, 400)
+);
 
 const saveAlbum = async (album) => {
   try {
@@ -129,15 +133,14 @@ const handleDelete = async (id) => {
           >
             <img src="../assets/add.svg" class="col-1 add" @click="saveAlbum(album)" />
             <img
-              :src="album.images?.[0]?.url || noImage"
+              :src="album.images[0]?.url"
               alt="Capa"
               class="rounded mx-2 album-cover"
             />
 
-            {{ album.artists?.[0]?.name || "Artista desconhecido" }} <br />
+            {{ album.artists[0]?.name }} <br />
 
-            {{ album.name || "Álbum desconhecido" }},
-            {{ album.release_date?.slice(0, 4) || "Ano desconhecido" }}
+            {{ album.name }}, {{ album.release_date.slice(0, 4) }}
           </li>
         </ul>
       </div>
@@ -237,6 +240,10 @@ const handleDelete = async (id) => {
 <style scoped>
 #search-background {
   background-color: #d9d9d9;
+}
+
+body {
+  scroll-behavior: auto !important;
 }
 
 input {
