@@ -128,16 +128,23 @@ const handleDelete = async (id) => {
             :key="album.id"
             class="col-lg-4 col-md-6 col-12 d-block my-2 d-flex"
           >
-            <img src="../assets/add.svg" class="col-1 add" @click="saveAlbum(album)" />
-            <img
-              :src="album.images?.[0]?.url || noImage"
-              alt="Capa"
-              class="rounded mx-2 album-cover"
-            />
-
-            {{ album.artists[0]?.name }} <br />
-
-            {{ album.name }}, {{ album.release_date.slice(0, 4) }}
+            <img :src="album.img || noImage" class="rounded mx-2 album-cover mt-2" />
+            <p class="mt-2 mx-2">
+              <b>{{ album.artist || "Artista desconhecido" }}</b
+              ><br />
+              {{ album.album || "Álbum desconhecido" }}<br />
+              {{ album.album_year || "Ano desconhecido" }}<br />
+              <img
+                :src="album.favorite ? favoritedIcon : unfavoritedIcon"
+                class="col-lg-2 col-1 add mt-2"
+                @click="toggleFavorite(album)"
+              />
+              <img
+                src="../assets/remove.svg"
+                class="col-lg-2 col-1 add mt-2 mx-2"
+                @click="handleDelete(album.id)"
+              />
+            </p>
           </li>
         </ul>
       </div>
@@ -257,7 +264,7 @@ input {
 }
 
 ul {
-  min-height: 15rem; /* ou o valor necessário para evitar "saltos" */
+  min-height: 20rem; /* ou o valor necessário para evitar "saltos" */
 }
 
 .bg-grey {
