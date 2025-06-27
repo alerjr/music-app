@@ -10,6 +10,7 @@ import {
 
 import favoritedIcon from "../assets/favorited.svg";
 import unfavoritedIcon from "../assets/unfavorited.svg";
+import noImage from "../assets/solid.jpeg";
 
 const clientId = "3fbfb697d64046cea5904fffb80b767c";
 const clientSecret = "5649f07acfd942acb3e2828b92372724";
@@ -129,7 +130,7 @@ const handleDelete = async (id) => {
           >
             <img src="../assets/add.svg" class="col-1 add" @click="saveAlbum(album)" />
             <img
-              :src="album.images?.[0]?.url || require('../assets/solid.jpeg')"
+              :src="album.images?.[0]?.url || noImage"
               alt="Capa"
               class="rounded mx-2 album-cover"
             />
